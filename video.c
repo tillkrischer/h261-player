@@ -243,15 +243,15 @@ moveBlock(struct picture *pic, struct picture *prev, int xoff, int yoff, enum bl
         {
             if (type == Y1)
                 pic->Y[yoff + y][xoff + x] = prev->Y[yoff + y + mvy][xoff + x + mvx];
-            if (type == Y2)
+            else if (type == Y2)
                 pic->Y[yoff + y][xoff + 8 + x] = prev->Y[yoff + y + mvy][xoff + 8 + x + mvx];
-            if (type == Y3)
+            else if (type == Y3)
                 pic->Y[yoff + 8 + y][xoff + x] = prev->Y[yoff + 8 + y + mvy][xoff + x + mvx];
-            if (type == Y4)
+            else if (type == Y4)
                 pic->Y[yoff + 8 + y][xoff + 8 + x] = prev->Y[yoff + 8 + y + mvy][xoff + 8 + x + mvx];
-            if (type == Cb)
+            else if (type == Cb)
                 pic->Cb[yoff / 2 + y][xoff / 2 + x] = prev->Cb[yoff / 2 + y + mvy / 2][xoff / 2 + x + mvx / 2];
-            if (type == Cr)
+            else if (type == Cr)
                 pic->Cr[yoff / 2 + y][xoff / 2 + x] = prev->Cr[yoff / 2 + y + mvy / 2][xoff / 2 + x + mvx / 2];
         }
 }

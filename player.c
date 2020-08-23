@@ -41,7 +41,7 @@ int32_t WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, i
     wc.hCursor = LoadCursor(0, IDC_ARROW);
 
     RegisterClassW(&wc);
-    HWND hwnd = CreateWindowW(wc.lpszClassName, L"Pixels", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 400, 300, NULL, NULL, hInstance, NULL);
+    HWND hwnd = CreateWindowW(wc.lpszClassName, L"Pixels", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 800, 600, NULL, NULL, hInstance, NULL);
 
     initBuffer(&globalBuffer, 352, 288);
 

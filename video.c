@@ -186,12 +186,14 @@ void readCoeff(struct reader *r, double f[8][8], int quant, bool intra)
 
 void addPixel(double *dest, double f)
 {
-    *dest = MIN(255, MAX(0, *dest + f));
+    int intf = (int)MIN(255, MAX(-256, f));
+    *dest = MIN(255, MAX(0, *dest + intf));
 }
 
 void putPixel(double *dest, double f)
 {
-    *dest = MIN(255, MAX(0, f));
+    int intf = (int)MIN(255, MAX(-256, f + 0.5));
+    *dest = MIN(255, MAX(0, intf));
 }
 
 void addBlock(struct picture *pic, double f[8][8], int xoff, int yoff, enum blocktype type)
@@ -378,6 +380,10 @@ int readMB(struct reader *r, struct picture *pic, struct picture *prev, int *blo
 
     for (int i = 0; i < 6; i++)
     {
+        if (*mvx != 0 || *mvy != 0)
+        {
+            moveBlock(pic, prev, gxoff + xoff, gyoff + yoff, types[i], *mvx, *mvy);
+        }
         if (doReadCoeff[i])
         {
             readCoeff(r, f, *quant, mtype & IS_INTRA);
@@ -385,10 +391,6 @@ int readMB(struct reader *r, struct picture *pic, struct picture *prev, int *blo
                 putBlock(pic, f, gxoff + xoff, gyoff + yoff, types[i]);
             else
                 addBlock(pic, f, gxoff + xoff, gyoff + yoff, types[i]);
-        }
-        else if (*mvx != 0 || *mvy != 0)
-        {
-            moveBlock(pic, prev, gxoff + xoff, gyoff + yoff, types[i], *mvx, *mvy);
         }
     }
 
@@ -491,7 +493,7 @@ static void pgm_save2(double buf[288][352], int xsize, int ysize,
 //     pic = (struct picture *)malloc(sizeof(struct picture));
 //     prev = (struct picture *)malloc(sizeof(struct picture));
 
-//     for (int i = 1; i <= 100; i++)
+//     for (int i = 1; i <= 2; i++)
 //     {
 //         readPicture(&r, pic, prev);
 //         char framefile[100];
